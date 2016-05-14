@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang=""> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Project 1 - CS118: Computer Network Fundamentals - Spring 2016 (UCLA)</title>
+<meta name="description" content="">
+<meta name="author" content="Alexander Afanasyev">
+<link rel="canonical" href="http://web.cs.ucla.edu/project-1">
+<!-- Le styles -->
+
+<link rel="stylesheet" href="/classes/spring16/cs118/assets/bootstrap/css/bootstrap.min.css" id="bootstrap">
+<link rel="stylesheet" href="/classes/spring16/cs118/assets/font-awesome-4.5.0/css/font-awesome.min.css" id="font-awesome">
+<link rel="stylesheet" href="/classes/spring16/cs118/assets/css/style.css">
+
+<!-- Font Awesome -->
+<link href="/classes/spring16/cs118/assets/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="/classes/spring16/cs118/assets/js/libs/html5shiv.js"></script>
+<![endif]-->
+
+
+</head>
+<body>
+<header id="header">
+<hgroup>
+  <h1 id="site-title">
+    <a class="full" href="http://web.cs.ucla.edu/classes/spring16/cs118/">CS118: Computer Network Fundamentals - Spring 2016 (UCLA)</a>
+    <a class="hidden-print short" href="/classes/spring16/cs118/"></a>
+  </h1>
+
+</hgroup>
+
+</header>
+
+<nav id="navbar">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+
+  
+  
+          <li class="">
+            <a href="/classes/spring16/cs118/">Home</a>
+          </li>
+  
+
+  
+  
+          <li class="">
+            <a href="/classes/spring16/cs118/syllabus.html">Syllabus</a>
+          </li>
+  
+
+  
+  
+          <li class="">
+            <a href="/classes/spring16/cs118/homeworks.html">Homeworks</a>
+          </li>
+  
+
+  
+  
+          <li class="">
+            <a href="/classes/spring16/cs118/project-1.html">Project 1</a>
+          </li>
+  
+
+  
+  
+          <li class="">
+            <a href="/classes/spring16/cs118/project-2.html">Project 2</a>
+          </li>
+  
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+</nav>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+
+    <div id="main" class="col-xs-12 col-sm-12">
+      <article>
+
+<section>
+  <ul id="markdown-toc">
+  <li><a href="#project-1-simple-http-client-and-server" id="markdown-toc-project-1-simple-http-client-and-server">Project 1: Simple HTTP Client and Server</a>    <ul>
+      <li><a href="#revisions" id="markdown-toc-revisions">Revisions</a></li>
+      <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+      <li><a href="#task-description" id="markdown-toc-task-description">Task Description</a></li>
+      <li><a href="#how-to-approach-the-project" id="markdown-toc-how-to-approach-the-project">How to approach the project</a>        <ul>
+          <li><a href="#http-message-abstraction" id="markdown-toc-http-message-abstraction">HTTP message abstraction</a></li>
+          <li><a href="#web-server" id="markdown-toc-web-server">Web server</a></li>
+          <li><a href="#web-client" id="markdown-toc-web-client">Web client</a></li>
+        </ul>
+      </li>
+      <li><a href="#hints" id="markdown-toc-hints">Hints</a></li>
+      <li><a href="#environment-setup" id="markdown-toc-environment-setup">Environment Setup</a>        <ul>
+          <li><a href="#set-up-vagrant-and-create-vm-instance" id="markdown-toc-set-up-vagrant-and-create-vm-instance">Set up Vagrant and create VM instance</a></li>
+          <li><a href="#notes" id="markdown-toc-notes">Notes</a></li>
+        </ul>
+      </li>
+      <li><a href="#submission" id="markdown-toc-submission">Submission</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a>        <ul>
+          <li><a href="#bonus-points" id="markdown-toc-bonus-points">Bonus points</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="project-1-simple-http-client-and-server">Project 1: Simple HTTP Client and Server</h1>
+
+<h2 id="revisions">Revisions</h2>
+
+<ul>
+  <li><strong>April 25, 2016</strong>: Clarified the response to HTTP request with â€?â€?file path.</li>
+  <li><strong>April 25, 2016</strong>: Clarified the command line arguments of web-client.</li>
+  <li><strong>April 21, 2016</strong>: Clarified the requirements on HTTP responses.</li>
+  <li><strong>April 18, 2016</strong>: Clarified the timeout in the bonus requirements.</li>
+  <li><strong>April 15, 2016</strong>: Added sample code of using <code class="highlighter-rouge">select</code> to implement asynchronous programming</li>
+  <li><strong>April 8, 2016</strong>: Added sample code for name resolution and multi-threading (discussion slide deck is uploaded to CCLE).</li>
+  <li><strong>April 2, 2016</strong>: Added general hints of the project and instructions how to set up environment</li>
+  <li><strong>March 29, 2016</strong>: Added basic project description</li>
+</ul>
+
+<p>More hints and resources may be added later.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>In this project, you will learn socket programming and the basic of HTTP protocol through developing a simple Web server and client.</p>
+
+<p>All implementations should be written in C++ using <a href="http://en.wikipedia.org/wiki/Berkeley_sockets">BSD sockets</a>.
+<strong>No high-level network-layer abstractions (like Boost.Asio or similar) are allowed in this project.</strong>
+You are allowed to use some high-level abstractions, including C++11 extensions, for parts that are not directly related to networking, such as string parsing, multi-threading.
+We will also accept implementations written in C, however use of C++ is preferred.</p>
+
+<h2 id="task-description">Task Description</h2>
+
+<p>The project contains two parts: a Web server and a Web client.
+The Web server accepts an HTTP request, parses the request, and looks up the requested file in the local file system.
+If the file exists, the server returns the content of the file as part of HTTP response,
+otherwise returning HTTP response with the corresponding error code.</p>
+
+<p>After retrieving the response from the Web server, the client saves the retrieved file in the local file system.</p>
+
+<p>The basic part of this project only requires you to implement HTTP 1.0: the client and server will talk to each other through <strong>non-persistent</strong> connections.
+If you client and/or server supports HTTP 1.1, you will get bonus points, see details in <a href="#http1.1">Grading</a>).</p>
+
+<h2 id="how-to-approach-the-project">How to approach the project</h2>
+
+<p>You may want to approach the project in three stages:</p>
+
+<ol>
+  <li>Implementing <strong>HTTP message abstraction</strong></li>
+  <li>Implementing <strong>Web client</strong> module</li>
+  <li>Implementing <strong>Web server</strong> module.</li>
+</ol>
+
+<h3 id="http-message-abstraction">HTTP message abstraction</h3>
+
+<p>As the first step, you need to implement several helper classes that can help you to parse and construct an HTTP message, which can be either HTTP request or HTTP response.
+For example, you may want to implement an <code class="highlighter-rouge">HttpRequest</code> class that can help you to customize the HTTP request header and encode the HTTP request into a string of bytes of the wire format.  Some high-level pseudo code would look like:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>HttpRequest request;
+request.setUrl(...);
+request.setMethod(...);
+vector&lt;uint8_t&gt; wire = request.endcode();
+</code></pre>
+</div>
+
+<p>Note that you only needs to implement HTTP <code class="highlighter-rouge">GET</code> request in this project.</p>
+
+<p>You may also want to implement an <code class="highlighter-rouge">HttpRequest</code> constructor method that creates an <code class="highlighter-rouge">HttpRequest</code> object from the wire encoded request.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>HttpRequest request;
+request.consume(wire);
+</code></pre>
+</div>
+
+<p>Similarly, you may also want to implement an <code class="highlighter-rouge">HttpResponse</code> class that can facilitate processing HTTP responses.</p>
+
+<h3 id="web-server">Web server</h3>
+
+<p>After finishing HTTP abstraction, you can start building your Web server.
+The eventual output is a binary <code class="highlighter-rouge">web-server</code>, which must accept three command-line arguments: hostname of the Web site, a port number, and a directory name.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ web-server [hostname] [port] [file-dir]
+</code></pre>
+</div>
+
+<p>For example, the command below should start the Web server with host name <code class="highlighter-rouge">localhost</code> listening on port <code class="highlighter-rouge">4000</code> and serving files from the directory <code class="highlighter-rouge">/tmp</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ./web-server localhost 4000 /tmp
+</code></pre>
+</div>
+
+<p>The default arguments for <code class="highlighter-rouge">web-server</code> must be <code class="highlighter-rouge">localhost</code>, <code class="highlighter-rouge">4000</code>, and <code class="highlighter-rouge">.</code> (current working directory).</p>
+
+<p>The Web server needs to convert the hostname to an IP address and opens a listening socket on the IP address and the specified port number.
+Through the listening socket, the Web server accepts the connection requests from clients and establishes connections to the clients.
+Through the established connection, the Web server should receive the HTTP request sent by the client, and return the requested file in terms of HTTP response.
+The Web server <strong>must</strong> handle concurrent connections.
+In other words, the web server can talk to multiple clients at the same time.</p>
+
+<p>After implementing the Web server, you can test it by visting it through some widely used Web clients (e.g., Firefox, wget) on your local system.</p>
+
+<h3 id="web-client">Web client</h3>
+
+<p>After finishing the Web server, you can start building your Web client.
+The eventual output is also a binary <code class="highlighter-rouge">web-client</code>, which accepts multiple URLs as arguments.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ./web-client [URL] [URL]...
+</code></pre>
+</div>
+
+<p>For example, the command below should start the Web client that fetches <code class="highlighter-rouge">index.html</code> file from your webserver:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ./web-client http://localhost:4000/index.html
+</code></pre>
+</div>
+
+<p>The Web client first tries to connect to the Web server as specified in the URL.
+Once the connection is established, the client constructs the HTTP request and sends it to the Web server, expecting a response.
+After receiving the response, the client needs to parse it to distinguish success or failure codes.
+Finally, if the file is successfully retrieved, it should be saved in the current directory using the name inferred from the URL.</p>
+
+<p>You can also test your implementation by fetching data from some real websites or the web server you just implemented.</p>
+
+<h2 id="hints">Hints</h2>
+
+<p>About HTTP abstractions:</p>
+
+<ul>
+  <li>How many classes you need to create for the HTTP abstraction?
+    <ul>
+      <li>Can you use inheritance to reduce your workload?</li>
+    </ul>
+  </li>
+  <li>If we have the complete HTTP message, it is trivial to decode it.
+    <ul>
+      <li>How do we know we have received the complete message? especially for HTTP response?</li>
+      <li>For HTTP GET request, we know it ends with <code class="highlighter-rouge">\r\n\r\n</code>, but what if we only get part of it from <code class="highlighter-rouge">read</code> or <code class="highlighter-rouge">recv</code>, e.g., only <code class="highlighter-rouge">\r</code>?</li>
+      <li>For HTTP response, is it possible to decode the whole response before we get the complete message?</li>
+    </ul>
+  </li>
+  <li>
+    <p>You may assume the size of requested files is less than 1GB.</p>
+  </li>
+  <li>
+    <p>Your implementation must support three error codes: <code class="highlighter-rouge">200 OK</code>, <code class="highlighter-rouge">400 Bad request</code>, <code class="highlighter-rouge">404 Not found</code>. All the other error codes (e.g., <code class="highlighter-rouge">403 Forbidden</code>, <code class="highlighter-rouge">501 Not implemented</code>, <code class="highlighter-rouge">505 HTTP version not supported</code>) are optional.</p>
+  </li>
+  <li>What to return if the HTTP Request has a URL of â€?â€?
+    <ul>
+      <li>If the server has index.html and request is â€?index.htmlâ€?  the server MUST return index.html</li>
+      <li>If the server has index.html and request is â€?â€? the server may return index.html or 404, both implementations are correct.</li>
+      <li>If the server does not have index.html and request is â€?index.htmlâ€?or â€?â€? the server MUST return 404.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Here are some hints of using multi-thread techniques to implement the Web server.</p>
+
+<ul>
+  <li>For the Web server, you may have the main thread listening (and accepting) incoming <strong>connection requests</strong>.
+    <ul>
+      <li>Any special socket API you need here?</li>
+      <li>How to keep the listening socket receiving new requests?</li>
+    </ul>
+  </li>
+  <li>Once you accept a new connection, create a child thread for the new connection.
+    <ul>
+      <li>Is the new connection using the same socket as the one used by the main thread?</li>
+    </ul>
+  </li>
+  <li>Note that only HTTP 1.0 is required for the basic part of this project. HTTP 1.0 uses non-persistent connection. In other word, for each connection, only two messages are exchanged: a HTTP request and a HTTP response.
+    <ul>
+      <li>Does this assumption simplify the job of the child thread?</li>
+    </ul>
+  </li>
+</ul>
+
+<p>If you want to approach the problem using asynchronous programming model, here are some hints:</p>
+
+<ul>
+  <li>
+    <p>Understand the working mechanism of <a href="http://linux.die.net/man/2/select"><code class="highlighter-rouge">select</code> socket API</a>. In fact, you can treat <code class="highlighter-rouge">select</code> as a monitor of all your connections (even the listening socket).</p>
+  </li>
+  <li>
+    <p>Use <code class="highlighter-rouge">select</code> to figure out what event happened on which connection, and process the event correctly.</p>
+    <ul>
+      <li>how to distinguish the listening socket and the others?</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Here is some sample code:</p>
+
+<ul>
+  <li>
+    <p>A simple server that echoes back anything sent by the client: <a href="/classes/spring16/cs118/assets/hints/server.cpp">server.cpp</a>, <a href="/classes/spring16/cs118/assets/hints/client.cpp">client.cpp</a></p>
+  </li>
+  <li>
+    <p>Domain name resolution: <a href="/classes/spring16/cs118/assets/hints/showip.cpp">showip.cpp</a></p>
+  </li>
+  <li>
+    <p>A simple multi-thread countdown: <a href="/classes/spring16/cs118/assets/hints/multi-thread.cpp">multi-thread.cpp</a></p>
+  </li>
+  <li>
+    <p>Asynchronous server using <code class="highlighter-rouge">select</code>: <a href="/classes/spring16/cs118/assets/hints/async-server.cpp">async-server.cpp</a>, <a href="/classes/spring16/cs118/assets/hints/random-client.cpp">random-client.cpp</a></p>
+  </li>
+</ul>
+
+<p>Other resources</p>
+
+<ul>
+  <li><a href="http://beej.us/guide/bgnet/">Guide to Network Programming Using Sockets</a></li>
+</ul>
+
+<h2 id="environment-setup">Environment Setup</h2>
+
+<p>The best way to guarantee full credit for the project is to do project development using a Ubuntu 14.04-based virtual machine.</p>
+
+<p>You can easily create an image in your favourite virtualization engine (VirtualBox, VMware) using the Vagrant platform and steps outlined below.</p>
+
+<!-- , or use [this pre-created VirtualBox image](). -->
+
+<h3 id="set-up-vagrant-and-create-vm-instance">Set up Vagrant and create VM instance</h3>
+
+<p><strong>Note that all example commands are executed on the host machine (your laptop), e.g., in Terminal.app (or iTerm2.app) on OS X, cmd in Windows, and console or xterm on Linux.  After the last step (<code class="highlighter-rouge">vagrant ssh</code>) you will get inside the virtual machine and can compile your code there.</strong></p>
+
+<ul>
+  <li>
+    <p>Download and install your favourite virtualization engine, e.g., <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a></p>
+  </li>
+  <li>
+    <p>Download and install <a href="https://www.vagrantup.com/downloads.html">Vagrant tools</a> for your platform</p>
+  </li>
+  <li>
+    <p>Set up project and VM instance</p>
+
+    <ul>
+      <li>
+        <p>Clone project template</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/cawka/spring16-cs118-project1 ~/cs118-proj1
+cd ~/cs118-proj1
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>Initialize VM</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code>vagrant up
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>To establish an SSH session to the created VM, run</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code>vagrant ssh
+</code></pre>
+        </div>
+      </li>
+    </ul>
+
+    <p>If you are using Putty on Windows platform, <code class="highlighter-rouge">vagrant ssh</code> will return information regarding the IP address and the port to connect to your virtual machine.</p>
+  </li>
+  <li>
+    <p>Work on your project</p>
+
+    <p>All files in <code class="highlighter-rouge">~/cs118-proj1</code> folder on the host machine will be automatically synchronized with <code class="highlighter-rouge">/vagrant</code> folder on the virtual machine.  For example, to compile your code, you can run the following commands:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  vagrant ssh
+  cd /vagrant
+  make
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="notes">Notes</h3>
+
+<ul>
+  <li>
+    <p>If you want to open another SSH session, just open another terminal and run <code class="highlighter-rouge">vagrant ssh</code> (or create a new Putty session).</p>
+  </li>
+  <li>
+    <p>If you are using Windows, read <a href="http://www.sitepoint.com/getting-started-vagrant-windows/">this article</a> to help yourself set up the environment.</p>
+  </li>
+  <li>
+    <p>The code base contains the basic <code class="highlighter-rouge">Makefile</code> and two empty files <code class="highlighter-rouge">web-server.cpp</code> and <code class="highlighter-rouge">web-client.cpp</code>.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  $ vagrant ssh
+  vagrant@vagrant-ubuntu-trusty-64:~$ cd /vagrant
+  vagrant@vagrant-ubuntu-trusty-64:/vagrant$ ls
+  Makefile  README.md  Vagrantfile  web-client.cpp  web-server.cpp
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>You are now free to add more files and modify the Makefile to make the <code class="highlighter-rouge">web-server</code> and <code class="highlighter-rouge">web-client</code> full-fledged implementation.</p>
+  </li>
+</ul>
+
+<h2 id="submission">Submission</h2>
+
+<p>To submit your project, you need to prepare:</p>
+
+<ol>
+  <li>
+    <p>All your source code and Makefile (no binaries) as <code class="highlighter-rouge">.tar.gz</code> archive.</p>
+  </li>
+  <li>
+    <p>A PDF project report that describes</p>
+    <ul>
+      <li>the high level design of your server and client;</li>
+      <li>the problems your ran into and how you solved the problems;</li>
+      <li>additional instructions to build your project (if your project uses some other libraries);</li>
+      <li>how you tested your code and why.</li>
+      <li>the contribution of each team member (up to 3 members in one team) and their UID</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Put all these above into a package and submit to CCLE.</p>
+
+<p>Please make sure:</p>
+
+<ol>
+  <li>your code can compile</li>
+  <li>no unnecessary files in the package.</li>
+</ol>
+
+<p>Otherwise, your will not get any credit.</p>
+
+<h2 id="grading">Grading</h2>
+
+<p>Your code will be first checked by a software plagiarism detecting tool. If we find any plagiarism, you will not get any credit.</p>
+
+<p>Your code will then be automatically tested in some testing scenarios. If your code can pass all our automated test cases, you will get the full credit.</p>
+
+<h3 id="bonus-points">Bonus points</h3>
+
+<p>You can have:</p>
+
+<ul>
+  <li>1 extra point: if your client/server can handle HTTP request timeout;</li>
+  <li>2 extra points: if you can implement concurrent Web server using both synchronous and asynchronous programming techniques;</li>
+  <li><a name="http1.1"></a>2 extra points: if the client and server can support HTTP 1.1 in addition to HTTP 1.0: the client should be able to talk to the server over persistent connections, using pipelines if necessary.</li>
+</ul>
+
+
+</section>
+
+<footer>
+</footer>
+</article>
+
+    </div>
+
+  </div><!--/row-->
+</div> <!-- /container -->
+
+<hr>
+
+<footer id="footer">
+<p class="pull-right hidden-print"><a href="#">Back to top</a></p>
+<p>Copyright &copy; 2016, Alexander Afanasyev<small class="hidden-print">&nbsp;&nbsp;Based on <a href="https://github.com/tokkonopapa/jekyll-experiment">Jekyll Experiment</a></small></p>
+
+</footer>
+<script src="/classes/spring16/cs118/assets/js/libs/jquery-2.2.0.min.js"></script>
+<script src="/classes/spring16/cs118/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/classes/spring16/cs118/assets/js/script.js"></script>
+<script>
+    (function(win, doc, script) {
+        
+    }(window, document, 'script'));
+</script>
+
+</body>
+</html>
